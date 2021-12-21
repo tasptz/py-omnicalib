@@ -90,18 +90,9 @@ def undistort(poly_thetar: Tensor, poly_rz: Tensor,
         principal_point,
         True
     )
-    # from matplotlib import pyplot as plt
-    # fig, ax = plt.subplots(1, 2)
-    # ax[0].scatter(p_img[0, :, 0], p_img[0, :, 1])
-    # ax[1].scatter(p_img[1, :, 0], p_img[1, :, 1])
-    # plt.show()
 
     H, W = image.shape[-2:]
     p_rel = (p_img + 0.5) / p_img.new_tensor((W, H)) * 2 - 1
-
-    # print(p_rel.min(), p_rel.max())
-    # print(p_rel.shape)
-    # print(image.shape)
 
     Hv, Wv = view_shape
     return M, F.grid_sample(
