@@ -98,7 +98,7 @@ def undistort(poly_thetar: Tensor, poly_rz: Tensor,
     return M, F.grid_sample(
         image.expand(p_rel.shape[0], -1, -1, -1),
         p_rel.view(-1, Hv, Wv, 2),
-        mode='bilinear',
+        mode=mode,
         align_corners=False
     )
 
