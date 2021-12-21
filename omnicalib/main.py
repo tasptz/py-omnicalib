@@ -23,10 +23,14 @@ def main(detections: Dict, degree: int, threshold: float, count: int,
                      cv.IMREAD_GRAYSCALE).shape
     scale_image = 512 / max(W, H)
     image_paths = sorted(detections.keys())
-    image_points = torch.stack(
-        [detections[k]['image_points'] for k in image_paths]).to(torch.float64)
-    world_points = torch.stack(
-        [detections[k]['object_points'] for k in image_paths]).to(torch.float64)
+    image_points = torch.stack([
+        detections[k]['image_points']
+        for k in image_paths
+    ]).to(torch.float64)
+    world_points = torch.stack([
+        detections[k]['object_points']
+        for k in image_paths
+    ]).to(torch.float64)
     images = torch.stack([
         torch.from_numpy(cv.cvtColor(
             cv.resize(cv.imread(str(k)), None, fx=scale_image, fy=scale_image),
@@ -35,7 +39,6 @@ def main(detections: Dict, degree: int, threshold: float, count: int,
         for k in image_paths
     ])
 
-    search_principal_point = principal_point is None
     image_center = image_points.new_tensor((W, H)) * 0.5 - 0.5
     if principal_point is not None:
         principal_point = image_points.new_tensor(

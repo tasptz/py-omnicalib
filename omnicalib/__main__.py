@@ -14,8 +14,8 @@ def parse_args():
     parser.add_argument('-d', '--degree', type=int,
                         default=4, help='Polynom degree')
     parser.add_argument('-p', '--principal-point', type=float, nargs=2,
-                        help='Principal point relative to image center (if not given image center'
-                        ' is assumed)')
+                        help='Principal point relative to image center'
+                        ' (if not given image center is assumed)')
     parser.add_argument('-t', '--threshold', type=float, default=10.,
                         help='Reprojection error threshold in pixel for'
                         ' initial solution')

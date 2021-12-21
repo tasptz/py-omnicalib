@@ -64,7 +64,8 @@ def orthonorm(rot: Tensor, trans: Tensor) -> List[Tuple[Tensor, Tensor]]:
     '''
     Given the scaled `2 x 2` submatrix of a `3 x 3` rotation matrix
     and the scaled `(x, y)` components of a 3d translation vector
-    solve for the full `3 x 3` rotation matrix `R` and 3d translation vector `t`
+    solve for the full `3 x 3` rotation matrix `R` and 3d translation
+    vector `t`
 
     Note: the `2 x 2` submatrix can be permuted before solving,
     which results in different solutions

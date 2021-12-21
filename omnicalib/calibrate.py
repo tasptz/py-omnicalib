@@ -1,5 +1,4 @@
 import logging
-from math import exp
 from typing import Tuple
 
 import torch
@@ -38,9 +37,9 @@ def fit_reprojection_error(degree: int, r: Tensor, t_par: Tensor, ip: Tensor,
     return get_reprojection_error(poly, r, t, ip, wp).mean().item()
 
 
-def show_points(title: str, figure_path: str, image_points: Tensor, projected_points: Tensor,
-                images=None,
-                image_shape=None) -> None:
+def show_points(title: str, figure_path: str, image_points: Tensor,
+                projected_points: Tensor,
+                images=None, image_shape=None) -> None:
     '''
     Scatter plot of image points and reprojected points
     '''
