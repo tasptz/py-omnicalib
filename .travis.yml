@@ -10,7 +10,6 @@ install:
 script:
 - pip install flake8 numdifftools pytest
 - flake8 omnicalib
-- cd tests
 - python -m pytest --rootdir=tests tests/omnicalib_tests
 deploy:
   provider: releases
