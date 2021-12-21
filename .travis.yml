@@ -1,15 +1,26 @@
 jobs:
-  include:  
+  include:
     os: linux
     language: python
-    python: "3.9"
+    python: '3.9'
+cache: pip
 branches:
   only:
   - main
   - develop
 install:
-- python setup.py install
+- python setup.py bdist_wheel
+- pip install dist/omnicalib*.whl
 script:
 - pip install -r requirements.txt
+- flake8 omnicalib
 - cd tests
 - python -m pytest omnicalib_tests
+deploy:
+  provider: releases
+  api_key:
+    secure: h8FAya4HwfzmyPJrBD7MV6+R709ir6xzjVKCc8sQo041M8ewUVSK/Nvpm0mMjBHOKZJPe9v+oXiTf+AzQz2wGutRt3mqEacezpgsa5PJ5KTo8+t/7JZiqK29iaEx5q6V3wE8cuUGLxv7K+GQbg8EIU2F3WK1RrpkCYJlMa+HSlW1jr+ez+bkTmtKsW9V79nBaXU/9Cq8Ei1T4bRiNUg+KDoIwjTBqv3MUQbuTIWTEXkGyo3nHGYpZcfv48RSSdWlYBSx/7wkKXWGf2GdWPrrk/aDKEsTtgDcovImAuR7vCT40DfxLqEB6+yG3LryzryKWciUHwc8bHGmTvveuzHLo0Y+uvoSM14ZwexJCT9+AAfJCeGdr4nPfm0iKbrMVsKzM8hdkmHlL0OG2TuVdbKXYzireQUOeJT95Phq8TSeW+XZ4IgDu8TzdSSvVgEYoiCNm6L6Z1ebc0jcLRMw2Agkahw64Wj5QpzHeTKUuQoDcxEQFcQ9wf0DJpWsi8YvCEA257hc7E4C4B82K8Wh46RsRjcEhFHB7v+VcH9BzTV7e7vLhlCegNoVVwArDPFSGYSVWgGoUe9xb1MopMN2qGLIf1COzAuwwGDEfU+fb2RRF6zN+P97SU3up4nZFgLGfVj3DbLAP7jZn90POdaq2M1zdhjlq/KjYyezdA3G5EsXDzA=
+  file: "dist/omnicalib*.whl"
+  skip_cleanup: true
+  on:
+    tags: true
