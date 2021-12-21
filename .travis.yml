@@ -4,10 +4,6 @@ jobs:
     language: python
     python: '3.9'
 cache: pip
-branches:
-  only:
-  - main
-  - develop
 install:
 - python setup.py bdist_wheel
 - pip install dist/omnicalib*.whl
