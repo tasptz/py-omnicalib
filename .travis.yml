@@ -1,0 +1,14 @@
+jobs:
+  include:  
+    os: linux
+    language: python
+    python: "3.9"
+branches:
+  only:
+  - master
+  - develop
+install:
+- python setup.py install
+script:
+- pip install -r requirements.txt
+- python -m pytest omnicalib_tests
