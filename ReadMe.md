@@ -10,7 +10,7 @@
 ## Usage
 1. Corner detection (see `python -m omnicalib.detect --help` for detailed argument description)
 ```
-python -m omnical.detect --chessboard <columns> <rows> <square-size> --max-dim <max-dim> --threads <threads> <image-folder>
+python -m omnical.detect --chessboard <rows> <columns> <square-size> --max-dim <max-dim> --threads <threads> <image-folder>
 ```
 The file `detections.pickle` is written, which contains a **pickled dictionary** with the following format
 

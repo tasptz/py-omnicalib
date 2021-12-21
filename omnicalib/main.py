@@ -1,8 +1,10 @@
 import logging
+from typing import Dict
 
 import cv2 as cv
 import torch
 from matplotlib import pyplot as plt
+from torch import Tensor
 
 from .calibrate import calibrate
 from .geometry import get_theta, transform
@@ -11,7 +13,9 @@ from .plot import plot_rz_curve, plot_thetar_curve
 logging.basicConfig(level=logging.INFO)
 
 
-def main(detections, degree, threshold, count, principal_point=None):
+def main(detections: Dict, degree: int, threshold: float, count: int,
+         principal_point: Tensor = None,
+         spiral_step: int = 10, spiral_end: int = 100):
     '''
     Full calibration with plots
     '''
@@ -47,9 +51,10 @@ def main(detections, degree, threshold, count, principal_point=None):
             image_points,
             world_points,
             principal_point,
-            search_principal_point,
             images,
-            (H, W)
+            (H, W),
+            spiral_step,
+            spiral_end
         )
         with open('calibration.yml', 'w') as f:
             data = {
