@@ -1,0 +1,13 @@
+autograd
+autopep8
+flake8
+ipywidgets
+jupyterlab
+matplotlib
+numdifftools
+opencv-python-headless
+pytest
+pyyaml
+scipy
+torch>=1.10
+tqdm
