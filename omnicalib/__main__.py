@@ -21,18 +21,30 @@ def parse_args():
                         ' initial solution')
     parser.add_argument('-c', '--count', type=int, default=3,
                         help='Minimal number of images for initial solution')
+    parser.add_argument('-s', '--spiral-step', type=int, default=10,
+                        help='Step size for principal point search')
+    parser.add_argument('-e', '--spiral-end', type=int, default=100,
+                        help='Maximum distance for principal point search')
     args = parser.parse_args()
 
     with open(args.corners, 'rb') as f:
         data = pickle.load(f)
 
+    if args.principal_point:
+        spiral_step = 0
+        spiral_end = 0
+    else:
+        spiral_step = args.spiral_step
+        spiral_end = args.spiral_end
     try:
         main(
             data['detections'],
             args.degree,
             args.threshold,
             args.count,
-            args.principal_point
+            args.principal_point,
+            spiral_step,
+            spiral_end
         )
     except Exception as e:
         import sys

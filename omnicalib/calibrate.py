@@ -79,22 +79,23 @@ def get_error_str(x):
 def calibrate(degree: int, reprojection_error_threshold: float,
               reprojection_count: int, image_points: Tensor,
               world_points: Tensor, principal_point_initial: Tensor,
-              search_principal_point: bool,
-              images=None, image_shape=None) \
+              images: Tensor = None,
+              image_shape: Tuple[int, int] = None,
+              spiral_step: int = 10, spiral_end: int = 100) \
         -> Tuple[Tensor, Tensor, Tensor, Tensor, Tensor]:
     '''
     Full calibration algorithm
     '''
     logger = logging.getLogger('calibrate')
 
-    if search_principal_point:
+    if spiral_step and spiral_end:
         logger.info(
             'Brute-force search for principal point'
             f' ({reprojection_count} images'
             ' with mean reprojection error <='
             f' {reprojection_error_threshold:.1f})'
         )
-        progress = tqdm(list(spiral(10, end=100)))
+        progress = tqdm(list(spiral(spiral_step, end=spiral_end)))
     else:
         progress = tqdm([principal_point_initial])
 

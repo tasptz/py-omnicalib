@@ -16,7 +16,7 @@ The initial solution based on [A Toolbox for Easily Calibrating Omnidirectional 
 
 The initial solution is determined from a subset of all images. This is configured through the `--threshold` and `--count` arguments. The subset has to be at least `count` large and the reprojection error of each image has to be below `threshold`.
 
-Additionally the initial solution is very sensitive to the principal point of the images (true center). If it is known it can be specified with `--principal-point`. Otherwise the package applies a brute-force heuristic by spiralling outward from the image center and trying to satisfy `count` and `threshold` at each position. This is currently done in steps of 10 pixel in a 100 by 100 pixel region.
+Additionally the initial solution is very sensitive to the principal point of the images (true center). If it is known it can be specified with `--principal-point`. Otherwise the package applies a brute-force heuristic by spiralling outward from the image center and trying to satisfy `count` and `threshold` at each position. This is currently done in steps of `--spiral-step` pixel in a square region with side length `--spiral-end` pixel.
 ### Orthonorm
 To solve the scaling factor for the orthonorm vectors of the partial rotation matrix the following equation is solved. In this step only the absolute scaling factor can be determined.
 $$
