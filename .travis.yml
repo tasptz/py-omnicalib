@@ -12,7 +12,7 @@ install:
 - python setup.py bdist_wheel
 - pip install dist/omnicalib*.whl
 script:
-- pip install -r requirements.txt
+- pip install flake8 numdifftools pytest
 - flake8 omnicalib
 - cd tests
 - python -m pytest omnicalib_tests
