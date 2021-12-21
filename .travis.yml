@@ -5,7 +5,7 @@ jobs:
     python: "3.9"
 branches:
   only:
-  - master
+  - main
   - develop
 install:
 - python setup.py install
