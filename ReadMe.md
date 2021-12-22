@@ -10,7 +10,7 @@
 ## Usage
 1. Corner detection (see `python -m omnicalib.detect --help` for detailed argument description)
 ```
-python -m omnical.detect --chessboard <rows> <columns> <square-size> --max-dim <max-dim> --threads <threads> <image-folder>
+python -m omnicalib.detect --chessboard <rows> <columns> <square-size> --max-dim <max-dim> --threads <threads> <image-folder>
 ```
 The file `detections.pickle` is written, which contains a **pickled dictionary** with the following format
 
@@ -29,7 +29,7 @@ The file `detections.pickle` is written, which contains a **pickled dictionary**
 
  2. Calibration (see `python -m omnicalib --help` for detailed argument description)
  ```
-python -m omnical --degree <degree> detections.pickle
+python -m omnicalib --degree <degree> detections.pickle
 ```
 ## Result
 A `calibration.yml` file (see [example_calibration.yml](doc/example_calibration.yml)) containing
