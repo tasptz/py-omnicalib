@@ -38,6 +38,12 @@ A `calibration.yml` file (see [example_calibration.yml](doc/example_calibration.
  * `poly_radius_to_z`, a polynom that converts radius to z component of view vector
  * `principal_point` in pixel
 
+## Installation
+Install the [latest wheel](https://github.com/tasptz/py-omnicalib/releases/latest) with
+```
+pip install https://github.com/tasptz/py-omnicalib/releases/download/<wheel_url>
+```
+
 ## Method
 For a detailed description see [method.md](doc/method.md).
 
