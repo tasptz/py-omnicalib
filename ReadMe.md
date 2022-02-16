@@ -64,3 +64,15 @@ Play with the calibration on simulated data with the provided [jupyter lab noteb
 ![Example r-z curve](doc/example_rz.png)
 
 ![Example calibration](doc/example_thetar.png)
+
+## Citation
+If you would like to reference this work, see the following BibTeX suggestion
+```
+@misc{pyomnicalib,
+  author = {Pönitz, Thomas},
+  title = {Python Omnidirectional Camera Calibration},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  howpublished = {\url{https://github.com/tasptz/py-omnicalib}}
+}
+```
