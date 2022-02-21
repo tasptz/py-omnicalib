@@ -30,12 +30,6 @@ def parse_args():
     with open(args.corners, 'rb') as f:
         data = pickle.load(f)
 
-    if args.principal_point:
-        spiral_step = 0
-        spiral_end = 0
-    else:
-        spiral_step = args.spiral_step
-        spiral_end = args.spiral_end
     try:
         main(
             data['detections'],
@@ -43,8 +37,8 @@ def parse_args():
             args.threshold,
             args.count,
             args.principal_point,
-            spiral_step,
-            spiral_end
+            args.spiral_step,
+            args.spiral_end
         )
     except Exception as e:
         import sys
