@@ -19,8 +19,8 @@ def parse_args():
     parser.add_argument('-t', '--threshold', type=float, default=10.,
                         help='Reprojection error threshold in pixel for'
                         ' initial solution')
-    parser.add_argument('-c', '--count', type=int, default=3,
-                        help='Minimal number of images for initial solution')
+    parser.add_argument('-c', '--count', type=int, default=1,
+                        help='Number of images for initial solution')
     parser.add_argument('-s', '--spiral-step', type=int, default=10,
                         help='Step size for principal point search')
     parser.add_argument('-e', '--spiral-end', type=int, default=100,
