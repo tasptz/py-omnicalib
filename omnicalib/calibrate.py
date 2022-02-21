@@ -59,6 +59,8 @@ def _latex_float(v):
     s = f'{v:.1e}'
     if s.endswith('e+00'):
         return s[:-4]
+    elif s == 'nan':
+        return '\\mathrm{nan}'
     else:
         base, exponent = s.split('e')
         base, exponent = float(base), int(exponent)
@@ -69,9 +71,10 @@ def get_error_str(x):
     '''
     Format error to nice string
     '''
+    x = x.flatten()
     return (
         f'reprojection error $\\mu={_latex_float(x.mean())},'
-        f' \\sigma={_latex_float(x.std())}$'
+        f' \\sigma={_latex_float(x.std() if len(x) > 1 else 0.)}$'
     )
 
 
