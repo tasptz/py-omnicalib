@@ -34,7 +34,7 @@ def fit_reprojection_error(degree: int, r: Tensor, t_par: Tensor, ip: Tensor,
     # reject solution
     if poly[0] < 0 or not check_origin(r, t).squeeze().item():
         return float('inf')
-    return get_reprojection_error(poly, r, t, ip, wp).mean().item()
+    return get_reprojection_error(poly, r, t, ip, wp).squeeze()
 
 
 def show_points(title: str, figure_path: str, image_points: Tensor,
@@ -118,16 +118,16 @@ def calibrate(degree: int, reprojection_error_threshold: float,
             for r_ort, t_par_ort in orthonorm(r_par, t_par):
                 e = fit_reprojection_error(
                     degree, r_ort[None], t_par_ort[None], ip[None], wp[None])
-                if e < min_error:
-                    min_error = e
-                    if e < reprojection_error_threshold:
-                        best = r_ort, t_par_ort
+                e_mean = e.mean().item() if isinstance(e, Tensor) else e
+                if e_mean < min_error:
+                    min_error = e_mean
+                    if e_mean < reprojection_error_threshold:
+                        best = e, r_ort, t_par_ort
             if best is None:
                 valid.append(False)
             else:
                 valid.append(True)
-                results.append(
-                    (image_points.new_tensor(min_error).view(1),) + best)
+                results.append(best)
         progress.set_description(
             f'{min_error:.3f} {int(x_spiral):+4d} {int(y_spiral):+4d}')
         if len(results) >= reprojection_count:
@@ -140,17 +140,18 @@ def calibrate(degree: int, reprojection_error_threshold: float,
 
     reprojection_errors, R, T_par_ort = [torch.stack(x) for x in zip(*results)]
     assert torch.allclose(torch.linalg.det(R), R.new_ones(len(R)))
-    reprojection_errors = reprojection_errors.squeeze(1)
+    mean_reprojection_errors = reprojection_errors.mean(dim=1)
+    reprojection_error_threshold = torch.sort(mean_reprojection_errors)[0][reprojection_count - 1]
+    fit_mask = mean_reprojection_errors <= reprojection_error_threshold
 
-    error_str = get_error_str(reprojection_errors)
+    error_str = get_error_str(reprojection_errors[fit_mask])
     logger.info(f'Initial {error_str}')
     logger.info(
         f'Initial principal point ({principal_point[0]:.1f},'
         f' {principal_point[1]:.1f})'
     )
 
-    fit_mask = reprojection_errors <= reprojection_error_threshold
-    logger.info(f'Initial solution for {fit_mask.sum()}/{len(fit_mask)} valid')
+    logger.info(f'Initial solution for {fit_mask.sum()}/{len(fit_mask)} selected')
     valid[torch.where(valid)[0][~fit_mask]] = False
     R = R[fit_mask]
     assert torch.allclose(torch.linalg.det(R), R.new_ones(len(R)))
