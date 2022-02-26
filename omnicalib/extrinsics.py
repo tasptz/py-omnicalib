@@ -82,5 +82,6 @@ def full_extrinsics(poly: Tensor, image_points: Tensor, word_points: Tensor) \
     R, T = f(nu)
     # would origin lie behind chessboard (z > 0)
     mask_invert = ~check_origin(R, T)
-    R[mask_invert], T[mask_invert] = f(-nu[mask_invert])
+    if mask_invert.any():
+        R[mask_invert], T[mask_invert] = f(-nu[mask_invert])
     return R, T
