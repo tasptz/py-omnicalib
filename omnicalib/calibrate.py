@@ -141,7 +141,8 @@ def calibrate(degree: int, reprojection_error_threshold: float,
     reprojection_errors, R, T_par_ort = [torch.stack(x) for x in zip(*results)]
     assert torch.allclose(torch.linalg.det(R), R.new_ones(len(R)))
     mean_reprojection_errors = reprojection_errors.mean(dim=1)
-    reprojection_error_threshold = torch.sort(mean_reprojection_errors)[0][reprojection_count - 1]
+    reprojection_error_threshold = \
+        torch.sort(mean_reprojection_errors)[0][reprojection_count - 1]
     fit_mask = mean_reprojection_errors <= reprojection_error_threshold
 
     error_str = get_error_str(reprojection_errors[fit_mask])
@@ -151,7 +152,9 @@ def calibrate(degree: int, reprojection_error_threshold: float,
         f' {principal_point[1]:.1f})'
     )
 
-    logger.info(f'Initial solution for {fit_mask.sum()}/{len(fit_mask)} selected')
+    logger.info(
+        f'Initial solution for {fit_mask.sum()}/{len(fit_mask)} selected'
+    )
     valid[torch.where(valid)[0][~fit_mask]] = False
     R = R[fit_mask]
     assert torch.allclose(torch.linalg.det(R), R.new_ones(len(R)))
