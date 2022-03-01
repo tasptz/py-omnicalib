@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 
 setup(name='omnicalib',
-      version='1.0',
+      version='1.0.1',
       description='Omnidirectional camera calibration',
       author='Thomas Pönitz',
       author_email='tasptz@gmail.com',
